@@ -3,7 +3,7 @@ function ButtonPrimary({ className, ...props }) {
         <button
             {...props}
             className={
-                "bg-teal-700 flex items-center justify-center px-2 py-0.5 text-sm text-gray-100 rounded-sm tracking-wide hover:bg-teal-600 hover:text-gray-50 transition-all " +
+                "bg-light-gray border border-primary/30 text-primary shadow-custom flex items-center justify-center px-2 py-0.5  rounded-sm tracking-wide hover:text-priamry/90 transition-all " +
                 className
             }
         >

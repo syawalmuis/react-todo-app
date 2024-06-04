@@ -4,7 +4,7 @@ function Checkbox({ className, ...props }) {
             {...props}
             type="checkbox"
             className={
-                "border w-4 h-4 focus:outline-none focus:border-teal-700 px-2 py-0.5 rounded-none text-gray-600 text-sm accent-teal-700 focus:ring-teal-700 focus:ring-2 ring-offset-1 " +
+                "border w-4 h-4 focus:outline-none !border-primary focus:border-primary px-2 py-0.5 rounded-none text-gray-600 text-sm accent-primary " +
                 className
             }
         />

@@ -3,7 +3,7 @@ function Input({ className, ...props }) {
         <input
             {...props}
             className={
-                "border focus:outline-none focus:border-teal-700 px-2 py-0.5 rounded-none text-gray-600 text-sm accent-teal-700 " +
+                "border bg-light-gray focus:outline-none shadow-custom  px-2 py-0.5 placeholder:text-primary rounded-none text-primary border-primary/30  " +
                 className
             }
         />

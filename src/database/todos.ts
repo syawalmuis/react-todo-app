@@ -8,7 +8,7 @@ type Todo = {
 };
 
 const sortingDefault = (a: Todo, b: Todo) =>
-    a.isCompleted - b.isCompleted || a.createdAt - b.createdAt;
+    a.isCompleted - b.isCompleted || b.createdAt - a.createdAt;
 
 const defaultTodos: Todo[] = [
     { id: 1, text: "Learn React", isCompleted: 0, createdAt: Date.now() },
@@ -18,7 +18,7 @@ const defaultTodos: Todo[] = [
 
 const getTodos = (): Todo[] | undefined => {
     const todos = localStorage.getItem("todos");
-    if (!todos) setTodos(defaultTodos);
+    if (!todos) setTodos([]);
     return !todos ? [] : (JSON.parse(todos) as Todo[]).sort(sortingDefault);
 };
 
@@ -26,16 +26,36 @@ const setTodos = (todos: Todo[]) => {
     localStorage.setItem("todos", JSON.stringify(todos));
 };
 
-const createTodo = (todo: Todo) => {
+const createTodo = (
+    todo: Todo,
+    filter: "all" | "uncompleted" | "completed"
+) => {
     const todos = [...(getTodos() ?? []), todo];
     if (!todos) {
         return;
     }
     setTodos(todos);
-    return todos.sort(sortingDefault);
+    return ["completed", "uncompleted"].includes(filter)
+        ? filterTodos(filter)
+        : todos?.sort(sortingDefault);
 };
 
-const updateTodo = (id: number, updatedTodo: Todo) => {
+const deleteTodo = (
+    id: number,
+    filter: "all" | "uncompleted" | "completed"
+) => {
+    const todos = getTodos()?.filter((todo) => todo.id !== id);
+    setTodos(todos ?? []);
+    return ["completed", "uncompleted"].includes(filter)
+        ? filterTodos(filter)
+        : todos?.sort(sortingDefault);
+};
+
+const updateTodo = (
+    id: number,
+    updatedTodo: Todo,
+    filter: "all" | "uncompleted" | "completed"
+) => {
     const todos = getTodos()?.map((todo) => {
         if (todo.id === id) {
             return updatedTodo;
@@ -43,18 +63,33 @@ const updateTodo = (id: number, updatedTodo: Todo) => {
         return todo;
     });
     setTodos(todos ?? []);
-    return todos?.sort(sortingDefault);
+
+    return ["completed", "uncompleted"].includes(filter)
+        ? filterTodos(filter)
+        : todos?.sort(sortingDefault);
 };
 
-const filterTodos = (filter: "completed" | "notCompleted"): Todo[] => {
+const filterTodos = (filter: "all" | "completed" | "uncompleted"): Todo[] => {
     const todos = getTodos();
-    console.log(todos);
     if (!todos) return [];
-    return (
-        filter === "completed"
-            ? todos.filter((todo) => Boolean(todo.isCompleted) === true)
-            : todos.filter((todo) => Boolean(todo.isCompleted) === false)
-    ).sort(sortingDefault);
+    let newTodos: Todo[];
+
+    switch (filter) {
+        case "completed":
+            newTodos = todos.filter(
+                (todo) => Boolean(todo.isCompleted) === true
+            );
+            break;
+        case "uncompleted":
+            newTodos = todos.filter(
+                (todo) => Boolean(todo.isCompleted) === false
+            );
+            break;
+        default:
+            newTodos = todos;
+            break;
+    }
+    return newTodos.sort(sortingDefault);
 };
 
-export { getTodos, updateTodo, createTodo, filterTodos };
+export { getTodos, updateTodo, createTodo, filterTodos, deleteTodo };

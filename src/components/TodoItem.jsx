@@ -4,11 +4,11 @@ import ButtonDanger from "./Form/ButtonDanger";
 import Checkbox from "./Form/Checkbox";
 import { useContext } from "react";
 import { AppContext } from "../App";
-import { getDate, getDateTime, getTime } from "../libs/date";
+import { getDate, getTime } from "../libs/date";
 
 function TodoItem({ todo }) {
-    const { updateTodos } = useContext(AppContext);
-    console.log(getTime(Date.now()));
+    const { updateTodos, destroyTodo } = useContext(AppContext);
+
     return (
         <li className="flex select-none items-center justify-between p-2 rounded-sm bg-light-gray shadow-custom  border border-primary/30 ">
             <div className="flex items-center gap-1.5">
@@ -50,11 +50,7 @@ function TodoItem({ todo }) {
                 </label>
             </div>
             <div className="flex items-center gap-1">
-                <ButtonSecondary>
-                    {" "}
-                    <MdEdit />{" "}
-                </ButtonSecondary>
-                <ButtonDanger>
+                <ButtonDanger onClick={() => destroyTodo(todo.id)}>
                     <MdDelete />
                 </ButtonDanger>
             </div>

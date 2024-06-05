@@ -1,32 +1,68 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useState } from "react";
 import TodoForm from "./components/TodoForm";
-import { getTodos, updateTodo, createTodo as addTodo } from "./database/todos";
+import {
+    getTodos,
+    updateTodo,
+    createTodo as addTodo,
+    deleteTodo,
+    filterTodos as filterTd,
+} from "./database/todos";
 import Card from "./components/Form/Card";
+import Footer from "./components/Footer";
 
-export const AppContext = createContext({ updateTodos: () => {} });
-
+export const AppContext = createContext({
+    updateTodos: () => {},
+    destroyTodo: () => {},
+});
 function App() {
     const [todos, setTodos] = useState(getTodos());
+    const [filter, setFilter] = useState("all");
+    const [filterSelected, setFilterSelected] = useState(null);
 
     const updateTodos = (id, todo) => {
-        setTodos(updateTodo(id, todo));
+        const newTodos = updateTodo(id, todo, filter);
+        setTodos(newTodos);
     };
 
     const createTodo = (todo) => {
-        const todos = addTodo(todo);
+        let newFilter = filter;
+        if (newFilter === "completed") {
+            newFilter = "uncompleted";
+        }
+        const todos = addTodo(todo, newFilter);
         setTodos(todos);
     };
 
-    return (
-        <AppContext.Provider value={{ updateTodos }}>
-            <br />
-            <Card className="max-w-lg w-full mx-auto pt-10">
-                <h2 className="text-center font-semibold text-xl tracking-wider uppercase text-gray-800">
-                    Todo
-                </h2>
+    const destroyTodo = (id) => {
+        const todos = deleteTodo(id, filter);
+        setTodos(todos);
+    };
 
-                <TodoForm {...{ todos, createTodo }} />
-            </Card>
+    const filterTodos = (filter) => {
+        setFilter(filter);
+        setTodos(filterTd(filter));
+    };
+
+    return (
+        <AppContext.Provider value={{ updateTodos, destroyTodo }}>
+            <main className="!px-5 pt-5">
+                <Card className="max-w-lg w-full mx-auto pt-10 pb-12 relative">
+                    <h2 className="text-center font-semibold text-xl tracking-wider uppercase text-dark-gray">
+                        Todo
+                    </h2>
+                    <TodoForm
+                        {...{
+                            todos,
+                            createTodo,
+                            filterTodos,
+                            filter,
+                            setFilterSelected,
+                            filterSelected,
+                        }}
+                    />
+                    <Footer />
+                </Card>
+            </main>
         </AppContext.Provider>
     );
 }

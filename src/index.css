@@ -12,10 +12,11 @@
         box-shadow: 2px 3px var(--primary);
     }
 
-    input.shadow-custom:focus,
+    :is(input, select).shadow-custom:focus,
     button.shadow-custom:active,
     div.shadow-custom:where(input:checked),
-    li.shadow-custom:has(input:checked) {
+    li.shadow-custom:has(input:checked),
+    .pressed {
         box-shadow: none;
         border: 1px solid var(--primary);
         transform: translateY(2px);

@@ -48,11 +48,6 @@ function TodoItem({ todo }) {
                     }
                 </label>
             </div>
-            <div className="flex items-center gap-1">
-                <ButtonDanger onClick={() => destroyTodo(todo.id)}>
-                    <MdDelete />
-                </ButtonDanger>
-            </div>
         </li>
     );
 }

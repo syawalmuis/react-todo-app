@@ -18,7 +18,7 @@ export default function Form({
             <div className="!w-full relative">
                 <Input
                     id="submit"
-                    className={"w-full [&~label]:placeholder-shown:inline"}
+                    className={"w-full [&~label]:placeholder-shown:md:inline"}
                     placeholder={placeholder}
                     onKeyDown={(event) => {
                         if (event.key === "Enter") {

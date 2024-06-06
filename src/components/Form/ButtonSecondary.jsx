@@ -3,7 +3,7 @@ function ButtonSecondary({ children, className = "", ...props }) {
         <button
             {...props}
             className={
-                "text-sm border flex items-center gap-1.5 border-primary/30 shadow-custom text-dark-gray bg-light-gray px-2 py-0.5 rounded-sm hover:text-dark-gray transition-all " +
+                "text-sm flex items-center gap-1.5 text-dark-gray bg-light-gray px-2 py-0.5 rounded-sm hover:text-dark-gray transition-all " +
                 className
             }
         >

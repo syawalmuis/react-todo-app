@@ -90,7 +90,7 @@ function TodoForm({
                         );
                     })
                 ) : (
-                    <li className="text-primary/60 select-none font-bold left-1/2 -translate-x-1/2 uppercase tracking-widest absolute top-1/3">
+                    <li className="text-primary/60 select-none font-bold left-1/2 -translate-x-1/2 uppercase tracking-widest absolute top-1/3 text-center w-full">
                         Belum ada todo
                     </li>
                 )}

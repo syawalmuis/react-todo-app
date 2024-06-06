@@ -59,7 +59,7 @@ function TodoItem({ todo }) {
                         anchor="bottom end"
                         className="flex flex-col w-max"
                     >
-                        <div className="w-max flex flex-col bg-light-gray border border-primary rounded-sm px-3 py-2 mt-2 space-y-1">
+                        <div className="w-max flex flex-col bg-light-gray border shadow-sm border-primary divide-y divide-primary mt-2 rounded-sm">
                             <ButtonSecondary
                                 className="!text-xs"
                                 onClick={() => handleEdit(todo.id)}

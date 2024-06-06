@@ -105,7 +105,7 @@ function App() {
                                 type="text"
                                 ref={inputSearchRef}
                                 onChange={handleSearch}
-                                className="focus:outline-none text-sm py-2 rounded-sm pe-2 leading-4 [&~label]:placeholder-shown:inline border ps-7 bg-transparent placeholder:text-gray-500 lowercase placeholder:capitalize"
+                                className="focus:outline-none text-sm py-2 rounded-sm pe-2 leading-4 [&~label]:placeholder-shown:md:inline border ps-7 bg-transparent placeholder:text-gray-500 lowercase placeholder:capitalize"
                                 placeholder="To-do search..."
                             />
                             <label

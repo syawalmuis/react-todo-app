@@ -1,12 +1,8 @@
-import ButtonPrimary from "./Form/ButtonPrimary";
 import TodoItem from "./TodoItem";
-import Input from "./Form/Input";
+import Form from "./Form";
 import { Fragment, useEffect, useRef, useState } from "react";
 import Select from "./Form/Select";
 import { filterTodos as filterTd, getTodos } from "../database/todos";
-import { CgAdd } from "react-icons/cg";
-import { SquaresPlusIcon, PlusIcon } from "@heroicons/react/20/solid";
-import { MdFormatListBulletedAdd } from "react-icons/md";
 
 function TodoForm({
     todos,
@@ -18,7 +14,7 @@ function TodoForm({
     const [todoErrorMessage, setTodoErrorMessage] = useState(null);
     const submitButtonRef = useRef(null);
 
-    const handleSubmit = (e) => {
+    const onSubmit = (e) => {
         e.preventDefault();
         const form = e.target;
         const { value: text } = form.querySelector("input");
@@ -61,40 +57,9 @@ function TodoForm({
 
     return (
         <div>
-            <form
-                onSubmit={handleSubmit}
-                className="flex w-full mb-5 px-2 items-start justify-center mt-4 gap-2"
-            >
-                <div className="w-full">
-                    <Input
-                        id="submit"
-                        className={"w-full"}
-                        placeholder="Type your To-Do here"
-                        onKeyDown={(event) => {
-                            if (event.key === "Enter") {
-                                submitButtonRef.current.classList.add(
-                                    "pressed"
-                                );
-                                setTimeout(() => {
-                                    submitButtonRef.current.classList.remove(
-                                        "pressed"
-                                    );
-                                }, 300);
-                            }
-                        }}
-                    />
-                    {todoErrorMessage}
-                </div>
-                <ButtonPrimary
-                    ref={submitButtonRef}
-                    id="submit"
-                    type="submit"
-                    className="px-4"
-                >
-                    <MdFormatListBulletedAdd className="font-bold text-2xl" />
-                </ButtonPrimary>
-            </form>
-
+            <div className="px-2 mt-4 mb-5">
+                <Form {...{ onSubmit, todoErrorMessage }} />
+            </div>
             <div className="px-2 flex items-center text-sm max-sm:text-sm justify-between gap-2 mb-2">
                 <h4 className="font-medium leading-relaxed text-dark-gray">
                     Todo completed{" "}

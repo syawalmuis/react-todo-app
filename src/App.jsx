@@ -12,12 +12,17 @@ import Card from "./components/Form/Card";
 import Footer from "./components/Footer";
 import AppContext from "./context/AppContext";
 import { BiSearch } from "react-icons/bi";
+import ModalEdit from "./components/Form/ModalEdit";
+import Form from "./components/Form";
 
 function App() {
     const [todos, setTodos] = useState(getTodos());
     const [filter, setFilter] = useState("all");
     const [search, setSearch] = useState("");
     const [filterSelected, setFilterSelected] = useState(null);
+    const [editedTodo, setEditedTodo] = useState(null);
+
+    const [isOpen, setIsOpen] = useState(false);
 
     const inputSearchRef = useRef(null);
 
@@ -49,6 +54,11 @@ function App() {
         setSearch(value);
     };
 
+    const handleEdit = (id) => {
+        setEditedTodo(todos.find((todo) => todo.id === id));
+        setIsOpen(true);
+    };
+
     const getUpdatedTodo = () => {
         setTodos(filterTd(filter, search));
     };
@@ -63,12 +73,21 @@ function App() {
                 e.preventDefault();
                 inputSearchRef.current.focus();
             }
+
+            if (e.key === "e" && e.ctrlKey) {
+                e.preventDefault();
+                this.document.querySelector("input#submit").focus();
+            }
         });
     }, []);
 
     return (
-        <AppContext.Provider value={{ updateTodos, destroyTodo }}>
+        <AppContext.Provider value={{ updateTodos, destroyTodo, handleEdit }}>
             <main className="!px-5 pt-3">
+                <ModalEdit
+                    {...{ isOpen, setIsOpen, editedTodo, updateTodos }}
+                    title="Edit To-Do"
+                ></ModalEdit>
                 <Card className="max-w-lg w-full mx-auto pt-10 pb-12 relative">
                     <div className="px-2 flex justify-between text-center">
                         <h2 className="font-semibold text-xl tracking-wider text-dark-gray">

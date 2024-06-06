@@ -1,17 +1,16 @@
-import { MdDelete, MdEdit } from "react-icons/md";
-import ButtonSecondary from "./Form/ButtonSecondary";
+import { MdDelete } from "react-icons/md";
 import ButtonDanger from "./Form/ButtonDanger";
 import Checkbox from "./Form/Checkbox";
 import { useContext } from "react";
-import { AppContext } from "../App";
-import { getDate, getTime } from "../libs/date";
+import { getDate } from "../libs/date";
+import AppContext from "../context/AppContext";
 
 function TodoItem({ todo }) {
     const { updateTodos, destroyTodo } = useContext(AppContext);
 
     return (
-        <li className="flex select-none items-center justify-between p-2 rounded-sm bg-light-gray shadow-custom  border border-primary/30 ">
-            <div className="flex items-center gap-1.5">
+        <li className="flex select-none items-center justify-between p-2 rounded-sm bg-light-gray shadow-custom  border border-primary/30 gap-2 ">
+            <div className="flex items-center gap-1.5 w-full">
                 <Checkbox
                     {...{ checked: Boolean(todo.isCompleted) ? true : false }}
                     type="checkbox"
@@ -26,7 +25,7 @@ function TodoItem({ todo }) {
                 />
                 <label
                     htmlFor={todo.id}
-                    className={"cursor-pointer flex flex-col"}
+                    className={"cursor-pointer flex flex-col w-full"}
                 >
                     <span
                         className={

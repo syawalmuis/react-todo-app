@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import TodoForm from "./components/TodoForm";
 import {
     getTodos,
@@ -9,19 +9,15 @@ import {
 } from "./database/todos";
 import Card from "./components/Form/Card";
 import Footer from "./components/Footer";
+import AppContext from "./context/AppContext";
 
-export const AppContext = createContext({
-    updateTodos: () => {},
-    destroyTodo: () => {},
-});
 function App() {
     const [todos, setTodos] = useState(getTodos());
     const [filter, setFilter] = useState("all");
     const [filterSelected, setFilterSelected] = useState(null);
 
     const updateTodos = (id, todo) => {
-        const newTodos = updateTodo(id, todo, filter);
-        setTodos(newTodos);
+        updateTodo(id, todo, filter);
     };
 
     const createTodo = (todo) => {
@@ -29,19 +25,20 @@ function App() {
         if (newFilter === "completed") {
             newFilter = "uncompleted";
         }
-        const todos = addTodo(todo, newFilter);
-        setTodos(todos);
+        addTodo(todo, newFilter);
     };
 
     const destroyTodo = (id) => {
-        const todos = deleteTodo(id, filter);
-        setTodos(todos);
+        deleteTodo(id, filter);
     };
 
     const filterTodos = (filter) => {
         setFilter(filter);
-        setTodos(filterTd(filter));
     };
+
+    useEffect(() => {
+        setTodos(filterTd(filter));
+    }, [filter, destroyTodo, createTodo, updateTodos]);
 
     return (
         <AppContext.Provider value={{ updateTodos, destroyTodo }}>

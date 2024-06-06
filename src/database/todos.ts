@@ -16,10 +16,10 @@ const defaultTodos: Todo[] = [
     { id: 3, text: "Learn GraphQL", isCompleted: 0, createdAt: Date.now() },
 ];
 
-const getTodos = (): Todo[] | undefined => {
+const getTodos = (filter?: string): Todo[] | undefined => {
     const todos = localStorage.getItem("todos");
     if (!todos) setTodos([]);
-    return !todos ? [] : (JSON.parse(todos) as Todo[]).sort(sortingDefault);
+    return (!todos ? [] : (JSON.parse(todos) as Todo[])).sort(sortingDefault);
 };
 
 const setTodos = (todos: Todo[]) => {
@@ -30,7 +30,7 @@ const createTodo = (
     todo: Todo,
     filter: "all" | "uncompleted" | "completed"
 ) => {
-    const todos = [...(getTodos() ?? []), todo];
+    const todos = [...(getTodos(filter) ?? []), todo];
     if (!todos) {
         return;
     }

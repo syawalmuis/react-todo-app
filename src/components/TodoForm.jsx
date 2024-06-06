@@ -4,6 +4,9 @@ import Input from "./Form/Input";
 import { Fragment, useEffect, useRef, useState } from "react";
 import Select from "./Form/Select";
 import { filterTodos as filterTd, getTodos } from "../database/todos";
+import { CgAdd } from "react-icons/cg";
+import { SquaresPlusIcon, PlusIcon } from "@heroicons/react/20/solid";
+import { MdFormatListBulletedAdd } from "react-icons/md";
 
 function TodoForm({
     todos,
@@ -23,7 +26,7 @@ function TodoForm({
         if (isEmpty) {
             setTodoErrorMessage(
                 <span className="font-semibold ms-0.5 text-xs text-red-600">
-                    Todo tidak boleh kosong!
+                    To-Do cannot be empty!
                 </span>
             );
             setTimeout(() => setTodoErrorMessage(null), 1000);
@@ -66,7 +69,7 @@ function TodoForm({
                     <Input
                         id="submit"
                         className={"w-full"}
-                        placeholder="Masukkan todo"
+                        placeholder="Type your To-Do here"
                         onKeyDown={(event) => {
                             if (event.key === "Enter") {
                                 submitButtonRef.current.classList.add(
@@ -86,7 +89,10 @@ function TodoForm({
                     ref={submitButtonRef}
                     id="submit"
                     type="submit"
-                />
+                    className="px-4"
+                >
+                    <MdFormatListBulletedAdd className="font-bold text-2xl" />
+                </ButtonPrimary>
             </form>
 
             <div className="px-2 flex items-center text-sm max-sm:text-sm justify-between gap-2 mb-2">

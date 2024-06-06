@@ -10,7 +10,7 @@ export default forwardRef(function ButtonPrimary({ className, ...props }, ref) {
                 className
             }
         >
-            Tambah
+            {props.children}
         </button>
     );
 });
